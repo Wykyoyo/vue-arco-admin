@@ -1,7 +1,7 @@
 <template>
   <div>
     首页 {{ userStore.count }}
-    <button @click="onClickAdd">+1</button>
+    <button @click="onClickAdd" class="bg-red-400">+1</button>
   </div>
 </template>
 <script setup lang="ts">
