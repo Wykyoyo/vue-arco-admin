@@ -2,6 +2,7 @@
   <div>
     首页 {{ userStore.count }}
     <button @click="onClickAdd" class="bg-red-400">+1</button>
+    <el-button type="primary">123</el-button>
   </div>
 </template>
 <script setup lang="ts">
