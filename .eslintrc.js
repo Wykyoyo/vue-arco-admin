@@ -20,6 +20,7 @@ module.exports = {
     semi: 0,
     'import/no-unresolved': 0,
     'import/extensions': 0,
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    'no-use-before-define': 0
   }
 }

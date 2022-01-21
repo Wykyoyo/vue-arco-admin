@@ -4,6 +4,8 @@ import App from './App.vue'
 import router from './router'
 import 'virtual:windi.css'
 
+import './assets/js/iconfont.js'
+
 const app = createApp(App)
 app.use(router)
 app.use(createPinia())
