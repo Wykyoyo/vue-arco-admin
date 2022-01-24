@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { resolve } from 'path'
 import WindiCSS from 'vite-plugin-windicss'
+import styleImport from 'vite-plugin-style-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +15,18 @@ export default defineConfig({
       open: true,
       gzipSize: true,
       brotliSize: true
+    }),
+    styleImport({
+      libs: [
+        {
+          libraryName: '@arco-design/web-vue',
+          esModule: true,
+          resolveStyle: (name) => {
+            // css
+            return `@arco-design/web-vue/es/${name}/style/css.js`
+          }
+        }
+      ]
     })
   ],
   resolve: {

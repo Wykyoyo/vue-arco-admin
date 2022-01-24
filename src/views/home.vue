@@ -17,10 +17,12 @@
     </span>
 
     <button @click="onClickAdd" class="bg-red-400">+1</button>
+    <Button type="primary">123</Button>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { Button } from '@arco-design/web-vue'
 import useUserStore from '../store/user'
 
 const userStore = useUserStore()
