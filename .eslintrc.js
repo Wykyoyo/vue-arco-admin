@@ -21,6 +21,8 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/extensions': 0,
     'vue/multi-word-component-names': 0,
-    'no-use-before-define': 0
+    'no-use-before-define': 0,
+    'vue/no-multiple-template-root': 0,
+    'no-undef': 0
   }
 }
