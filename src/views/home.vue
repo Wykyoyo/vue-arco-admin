@@ -37,7 +37,9 @@ const state = reactive<stateModel>({
 
 // 切换暗黑模式
 const changeDarkMode = (mode: 'light' | 'dark') => {
-  document.body.classList.add(mode)
+  document.documentElement.classList.remove(mode === 'dark' ? 'light' : 'dark')
+  document.documentElement.classList.add(mode)
+
   document.body.setAttribute('arco-theme', mode)
   state.mode = mode
 }

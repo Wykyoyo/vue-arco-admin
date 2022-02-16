@@ -14,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/axios.vue') // 懒加载组件
   },
   {
+    path: '/layout',
+    name: 'Layout',
+    component: () => import('@/layout/layout.vue') // 懒加载组件
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
