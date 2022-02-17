@@ -1,6 +1,7 @@
 import Request from '../utils/http'
 
-export default new Request({
+// eslint-disable-next-line import/prefer-default-export
+export const axios = new Request({
   baseURL: '',
   timeout: 6000
 })
