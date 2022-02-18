@@ -5,8 +5,8 @@
         v-for="item in tabList"
         :key="item.key"
         :title="`${item.title}${
-          props.noticeList[item.key as keyof typeof props.noticeList].number !== 0
-            ? '（' + noticeList.message.number + '）'
+          noticeList[item.key as keyof typeof props.noticeList].number !== 0
+            ? '（' + noticeList[item.key as keyof typeof props.noticeList].number + '）'
             : ''
         }`"
       ></TabPane>

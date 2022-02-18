@@ -29,7 +29,10 @@
         <div
           class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E]"
         >
-          <Badge :count="1" :dot-style="{ top: '-3px', right: '-1px' }">
+          <Badge
+            :count="noticeNumber"
+            :dot-style="{ top: '-3px', right: '-1px' }"
+          >
             <svg
               class="icon text-size-20px dark:text-[#FFFFFFB3]"
               aria-hidden="true"
@@ -81,7 +84,7 @@
 </template>
 <script setup lang="ts">
 import { Avatar, Badge, Popover } from '@arco-design/web-vue'
-import { onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import useSettingStore from '../../store/setting'
 import NoticeContent from './noticeContent.vue'
 
@@ -123,17 +126,17 @@ const state = reactive<stateModel>({
     noticeList: {
       message: {
         key: 'message',
-        number: 0,
+        number: 3,
         data: []
       },
       notice: {
         key: 'notice',
-        number: 0,
+        number: 8,
         data: []
       },
       todo: {
         key: 'todo',
-        number: 0,
+        number: 6,
         data: []
       }
     }
@@ -162,6 +165,13 @@ const emit = defineEmits<{
 // #endregion
 
 // #region 消息通知相关
+const noticeNumber = computed(() => {
+  return (
+    state.notice.noticeList.message.number +
+    state.notice.noticeList.notice.number +
+    state.notice.noticeList.todo.number
+  )
+})
 const onChangeTab = (value: 'message' | 'notice' | 'todo') => {
   state.notice.activeKey = value
 }
