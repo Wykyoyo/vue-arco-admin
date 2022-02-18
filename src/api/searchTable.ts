@@ -1,9 +1,6 @@
 import { axios } from './axios'
 
+// eslint-disable-next-line import/prefer-default-export
 export const getSearchTable = (data: any) => {
   return axios.get('/list/GetSearchTable', data)
-}
-
-export const handleLittleThings = (data: any) => {
-  return axios.post('/api/v1/littleThings/HandleLittleThings_PC', data)
 }

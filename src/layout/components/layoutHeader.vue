@@ -21,6 +21,32 @@
       </template>
     </div>
     <div class="header_right mr-14px h-full flex items-center">
+      <Popover
+        position="br"
+        trigger="click"
+        content-class="layout_header_notice_popover"
+      >
+        <div
+          class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E]"
+        >
+          <Badge :count="1" :dot-style="{ top: '-3px', right: '-1px' }">
+            <svg
+              class="icon text-size-20px dark:text-[#FFFFFFB3]"
+              aria-hidden="true"
+            >
+              <use xlink:href="#icon-bell"></use>
+            </svg>
+          </Badge>
+        </div>
+        <template #content>
+          <NoticeContent
+            :active-key="state.notice.activeKey"
+            :notice-list="state.notice.noticeList"
+            @change-tab="onChangeTab"
+          ></NoticeContent>
+        </template>
+      </Popover>
+
       <div
         class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E]"
         @click="onChangeDarkMode"
@@ -28,7 +54,7 @@
         <svg
           class="icon text-size-20px dark:text-[#FFFFFFB3]"
           aria-hidden="true"
-          v-if="state.mode === 'light'"
+          v-if="settingStore.darkMode === 'light'"
         >
           <use xlink:href="#icon-sun"></use>
         </svg>
@@ -54,8 +80,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Avatar } from '@arco-design/web-vue'
+import { Avatar, Badge, Popover } from '@arco-design/web-vue'
 import { onMounted, reactive } from 'vue'
+import useSettingStore from '../../store/setting'
+import NoticeContent from './noticeContent.vue'
+
+const settingStore = useSettingStore()
 // #region props相关
 interface propsModel {
   collapsed: boolean
@@ -66,12 +96,48 @@ const props = withDefaults(defineProps<propsModel>(), {
 // #endregion
 
 // #region state相关
+interface noticeBaseModel {
+  key: 'message' | 'notice' | 'todo'
+  number: number
+  data: any
+}
+interface noticeListModel {
+  message: noticeBaseModel
+  notice: noticeBaseModel
+  todo: noticeBaseModel
+}
+
+interface noticeModel {
+  show: boolean
+  activeKey: string
+  noticeList: noticeListModel
+}
 interface stateModel {
-  mode: 'light' | 'dark'
+  notice: noticeModel
 }
 
 const state = reactive<stateModel>({
-  mode: 'dark'
+  notice: {
+    show: true,
+    activeKey: 'message',
+    noticeList: {
+      message: {
+        key: 'message',
+        number: 0,
+        data: []
+      },
+      notice: {
+        key: 'notice',
+        number: 0,
+        data: []
+      },
+      todo: {
+        key: 'todo',
+        number: 0,
+        data: []
+      }
+    }
+  }
 })
 // #endregion
 
@@ -81,12 +147,12 @@ const onClickCollapsedMenu = (value: boolean) => {
 
 // 切换暗黑模式
 const onChangeDarkMode = () => {
-  const mode = state.mode === 'dark' ? 'light' : 'dark'
+  const mode = settingStore.darkMode === 'dark' ? 'light' : 'dark'
   document.documentElement.classList.remove(mode === 'dark' ? 'light' : 'dark')
   document.documentElement.classList.add(mode)
 
   document.body.setAttribute('arco-theme', mode)
-  state.mode = mode
+  settingStore.updateDarkMode(mode)
 }
 
 // #region emits相关
@@ -95,11 +161,22 @@ const emit = defineEmits<{
 }>()
 // #endregion
 
+// #region 消息通知相关
+const onChangeTab = (value: 'message' | 'notice' | 'todo') => {
+  state.notice.activeKey = value
+}
+// #endregion
+
 onMounted(() => {
-  const { mode } = state
+  const mode = settingStore.darkMode
   document.documentElement.classList.remove(mode === 'dark' ? 'light' : 'dark')
   document.documentElement.classList.add(mode)
 
   document.body.setAttribute('arco-theme', mode)
 })
 </script>
+<style>
+.layout_header_notice_popover {
+  padding: 0px;
+}
+</style>

@@ -30,13 +30,19 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/list',
-        redirect: '/list/search-table'
+        redirect: '/list/card-list'
       },
       {
         path: '/list/search-table',
         name: 'SearchTable',
         meta: {},
         component: () => import('@/views/List/searchTable.vue')
+      },
+      {
+        path: '/list/card-list',
+        name: 'SearchTable',
+        meta: {},
+        component: () => import('@/views/List/cardList.vue')
       }
     ]
   },
