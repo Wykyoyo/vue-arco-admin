@@ -19,7 +19,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { onMounted, onUnmounted, reactive } from 'vue'
+import { throttle } from 'lodash-es'
 import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 
@@ -31,6 +32,24 @@ const state = reactive<stateModel>({
   collapsed: false
 })
 // #endregion
+
+const resizeWindows = throttle(() => {
+  const width: number = document.documentElement.clientWidth
+  if (width < 990) {
+    state.collapsed = true
+  } else {
+    state.collapsed = false
+  }
+}, 500)
+
+onMounted(() => {
+  resizeWindows()
+  window.addEventListener('resize', resizeWindows)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeWindows)
+})
 
 const onClickCollapsedMenu = (value: boolean) => {
   state.collapsed = value
