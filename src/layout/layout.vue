@@ -10,10 +10,8 @@
           @click-collapsed-menu="onClickCollapsedMenu"
         ></LayoutHeader>
       </header>
-      <main
-        class="flex-1 bg-[#F0F2F5] overflow-y-auto dark:bg-[#2A2C2C] px-16px py-16px"
-      >
-        <router-view></router-view>
+      <main class="flex-1 bg-[#F0F2F5] overflow-y-auto dark:bg-[#2A2C2C]">
+        <router-view class="px-16px py-16px"></router-view>
       </main>
     </div>
   </div>
