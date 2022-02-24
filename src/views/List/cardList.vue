@@ -1,7 +1,11 @@
 <template>
   <div class="flex justify-between flex-wrap">
     <Row :gutter="24">
-      <Col v-for="item in state.cardList" :key="item.index" :span="6">
+      <Col
+        v-for="item in state.cardList"
+        :key="item.index"
+        :span="state.cardSpan"
+      >
         <Card
           class="mb-10px cursor-pointer hover:shadow-2xl dark:hover:shadow-[#000] flex-shrink-0"
           hoverable
@@ -40,7 +44,8 @@
 </template>
 <script setup lang="ts">
 import { Card, Button, Divider, Grid } from '@arco-design/web-vue'
-import { onMounted, reactive } from 'vue'
+import { onMounted, onUnmounted, reactive } from 'vue'
+import { throttle } from 'lodash-es'
 import { getCardListData } from '../../api/cardList'
 
 const { Col, Row } = Grid
@@ -53,11 +58,24 @@ interface cardListModel {
 }
 interface stateModel {
   cardList: cardListModel[]
+  cardSpan: number
 }
 const state = reactive<stateModel>({
-  cardList: []
+  cardList: [],
+  cardSpan: 6
 })
 // #endregion
+
+const resizeWindows = throttle(() => {
+  const width: number = document.documentElement.clientWidth
+  if (width < 1080 && width >= 760) {
+    state.cardSpan = 8
+  } else if (width < 760) {
+    state.cardSpan = 12
+  } else {
+    state.cardSpan = 6
+  }
+}, 500)
 
 interface resultDataModel {
   data: cardListModel[]
@@ -73,7 +91,13 @@ const GetCardListData = () => {
 }
 
 onMounted(() => {
+  resizeWindows()
+  window.addEventListener('resize', resizeWindows)
   GetCardListData()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeWindows)
 })
 </script>
 <style scoped>
