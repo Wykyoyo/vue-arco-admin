@@ -47,6 +47,7 @@ import { Card, Button, Divider, Grid } from '@arco-design/web-vue'
 import { onMounted, onUnmounted, reactive } from 'vue'
 import { throttle } from 'lodash-es'
 import { getCardListData } from '../../api/cardList'
+import { loginNest } from '../../api/login'
 
 const { Col, Row } = Grid
 // #region state相关
@@ -90,7 +91,18 @@ const GetCardListData = () => {
   )
 }
 
+const LoginNest = () => {
+  const data = {
+    username: '123',
+    password: '123'
+  }
+  loginNest(data).then((res) => {
+    console.log(res)
+  })
+}
+
 onMounted(() => {
+  LoginNest()
   resizeWindows()
   window.addEventListener('resize', resizeWindows)
   GetCardListData()

@@ -21,6 +21,11 @@
       </template>
     </div>
     <div class="header_right mr-14px h-full flex items-center">
+      <div
+        class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E] dark:text-[#FFFFFFB3]"
+      >
+        当前在线人数 <span>{{ online }} </span>人
+      </div>
       <Popover
         position="br"
         trigger="click"
@@ -66,9 +71,11 @@ const settingStore = useSettingStore()
 // #region props相关
 interface propsModel {
   collapsed: boolean
+  online: number
 }
 const props = withDefaults(defineProps<propsModel>(), {
-  collapsed: false
+  collapsed: false,
+  online: 0
 })
 // #endregion
 

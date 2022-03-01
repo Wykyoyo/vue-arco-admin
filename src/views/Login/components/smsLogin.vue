@@ -1,6 +1,6 @@
 <template>
   <div class="login_form mt-45px">
-    <Form :model="state.form" class="w-380px" ref="refSmsLogin">
+    <Form :model="state.form" class="!w-380px" ref="refSmsLogin">
       <FormItem
         field="mobile"
         hide-label

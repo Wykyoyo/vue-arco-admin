@@ -8,6 +8,7 @@
         <LayoutHeader
           :collapsed="state.collapsed"
           @click-collapsed-menu="onClickCollapsedMenu"
+          :online="state.online"
         ></LayoutHeader>
       </header>
       <main class="flex-1 bg-[#F0F2F5] overflow-y-auto dark:bg-[#2A2C2C]">
@@ -19,15 +20,32 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive } from 'vue'
 import { throttle } from 'lodash-es'
+import { io } from 'socket.io-client'
 import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 
 // #region state相关
 interface stateModel {
   collapsed: boolean
+  online: number
 }
 const state = reactive<stateModel>({
-  collapsed: false
+  collapsed: false,
+  online: 0
+})
+// #endregion
+
+// #region socketio相关
+const socket = io('http://127.0.0.1:9110', {
+  transports: ['websocket']
+})
+// socket.on('connect', () => {
+//   console.log('连接了服务器1')
+//   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
+// })
+
+socket.on('onlineUser', (data: any) => {
+  state.online = data
 })
 // #endregion
 
@@ -47,6 +65,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeWindows)
+  socket.disconnect()
 })
 
 const onClickCollapsedMenu = (value: boolean) => {

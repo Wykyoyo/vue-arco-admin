@@ -15,7 +15,7 @@ const listRoute: RouteRecordRaw = {
     },
     {
       path: '/list/card-list',
-      name: 'SearchTable',
+      name: 'CardTable',
       meta: {},
       component: () => import('@/views/List/cardList.vue')
     }
