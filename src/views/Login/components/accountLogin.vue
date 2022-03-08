@@ -46,9 +46,9 @@
         </div>
       </FormItem>
       <FormItem field="password" hide-label>
-        <Button class="w-full" type="primary" size="large" @click="onLogin"
-          >登录</Button
-        >
+        <Button class="w-full" type="primary" size="large" @click="onLogin">
+          登录
+        </Button>
       </FormItem>
     </Form>
   </div>

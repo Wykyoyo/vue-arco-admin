@@ -76,6 +76,8 @@ const initMapEchar = () => {
             show: true,
             color: '#000a3c'
           },
+          animation: false,
+          zlevel: 1,
           // 地图样式
           itemStyle: {
             // 区域样式

@@ -61,13 +61,11 @@
 </template>
 <script setup lang="ts">
 import { Badge, Popover } from '@arco-design/web-vue'
-import { computed, onMounted, reactive } from 'vue'
-import useSettingStore from '../../store/setting'
+import { computed, reactive } from 'vue'
 import NoticeContent from './noticeContent.vue'
 import DarkMode from './darkMode.vue'
 import UserInfo from './userInfo.vue'
 
-const settingStore = useSettingStore()
 // #region props相关
 interface propsModel {
   collapsed: boolean
@@ -147,14 +145,6 @@ const onChangeTab = (value: 'message' | 'notice' | 'todo') => {
   state.notice.activeKey = value
 }
 // #endregion
-
-onMounted(() => {
-  const mode = settingStore.darkMode
-  document.documentElement.classList.remove(mode === 'dark' ? 'light' : 'dark')
-  document.documentElement.classList.add(mode)
-
-  document.body.setAttribute('arco-theme', mode)
-})
 </script>
 <style>
 .layout_header_notice_popover {

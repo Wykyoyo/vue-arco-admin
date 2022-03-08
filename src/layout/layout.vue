@@ -11,6 +11,54 @@
           :online="state.online"
         ></LayoutHeader>
       </header>
+      <div
+        class="tag h-38px flex items-center text-light-200 dark:bg-[#232324] w-full"
+      >
+        <div class="mr-2px">
+          <Button size="mini" type="text" @click="onClickToRight(100)"
+            >&lt;</Button
+          >
+        </div>
+        <div
+          class="flex-1 overflow-hidden"
+          ref="refTagsNavScroll"
+          @DOMMouseScroll.prevent="onMounseScroll"
+          @mousewheel.prevent="onMounseScroll"
+        >
+          <div
+            class="scroll_menu whitespace-nowrap inline-block"
+            ref="refScrollBody"
+            :style="scrollNavCss"
+          >
+            <Tag class="mr-10px">首页</Tag>
+            <Tag class="mr-10px">首页2</Tag>
+            <Tag class="mr-10px">首页1</Tag>
+            <Tag class="mr-10px">首页3</Tag>
+            <Tag class="mr-10px">首页4</Tag>
+            <Tag class="mr-10px">首页5</Tag>
+            <Tag class="mr-10px">首页6</Tag>
+            <Tag class="mr-10px">首页7</Tag>
+            <Tag class="mr-10px">首页8</Tag>
+            <Tag class="mr-10px">首页9asd</Tag>
+            <Tag class="mr-10px">首页10sadsa</Tag>
+            <Tag class="mr-10px">首页11fsadw</Tag>
+            <Tag class="mr-10px">按实际龙卷风三</Tag>
+            <Tag class="mr-10px">案发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+            <Tag class="mr-10px">案请问发萨达</Tag>
+          </div>
+        </div>
+        <div class="ml-2px">
+          <Button size="mini" type="text" @click="onClickToRight(-100)"
+            >></Button
+          >
+        </div>
+      </div>
       <main class="flex-1 bg-[#F0F2F5] overflow-y-auto dark:bg-[#2A2C2C]">
         <router-view class="px-16px py-16px"></router-view>
       </main>
@@ -18,35 +66,41 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { throttle } from 'lodash-es'
 import { io } from 'socket.io-client'
+import { Tag, Button } from '@arco-design/web-vue'
 import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
+
+const refTagsNavScroll = ref()
+const refScrollBody = ref()
 
 // #region state相关
 interface stateModel {
   collapsed: boolean
   online: number
+  translateX: number
 }
 const state = reactive<stateModel>({
   collapsed: false,
-  online: 0
+  online: 0,
+  translateX: 0
 })
 // #endregion
 
 // #region socketio相关
-const socket = io('http://127.0.0.1:9110', {
-  transports: ['websocket']
-})
+// const socket = io('http://127.0.0.1:9110', {
+//   transports: ['websocket']
+// })
 // socket.on('connect', () => {
 //   console.log('连接了服务器1')
 //   console.log(socket.id) // x8WIv7-mJelg7on_ALbx
 // })
 
-socket.on('onlineUser', (data: any) => {
-  state.online = data
-})
+// socket.on('onlineUser', (data: any) => {
+//   state.online = data
+// })
 // #endregion
 
 const resizeWindows = throttle(() => {
@@ -55,6 +109,14 @@ const resizeWindows = throttle(() => {
     state.collapsed = true
   } else {
     state.collapsed = false
+  }
+  const outerWidth = refTagsNavScroll.value.offsetWidth
+  const inWidth = refScrollBody.value.offsetWidth
+
+  if (inWidth < outerWidth) {
+    state.translateX = 0
+  } else if (inWidth + state.translateX < outerWidth) {
+    state.translateX = outerWidth - inWidth
   }
 }, 500)
 
@@ -65,10 +127,48 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeWindows)
-  socket.disconnect()
+  // socket.disconnect()
 })
 
 const onClickCollapsedMenu = (value: boolean) => {
   state.collapsed = value
 }
+
+const scrollNavCss = computed(() => {
+  return {
+    transform: `translateX(${state.translateX}px)`
+  }
+})
+
+const onMounseScroll = (value: any) => {
+  const { type, wheelDelta, detail } = value
+  let delta = 0
+  if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+    delta = wheelDelta || -(detail || 0) * 40
+  }
+  onClickToRight(delta)
+}
+
+const onClickToRight = (offset: number) => {
+  // const divScrollM = refScrollMenu.value
+  // divScrollM.scrollLeft += 100
+  const outerWidth = refTagsNavScroll.value.offsetWidth
+  const inWidth = refScrollBody.value.offsetWidth
+  const translateXOld = state.translateX
+  if (offset > 0) {
+    state.translateX = Math.min(0, translateXOld + offset)
+  } else if (outerWidth < inWidth) {
+    if (translateXOld >= -(inWidth - outerWidth)) {
+      state.translateX = Math.max(translateXOld + offset, outerWidth - inWidth)
+    }
+  } else {
+    state.translateX = 0
+  }
+  return false
+}
 </script>
+<style scoped>
+.scroll_menu {
+  transition: transform 0.5s ease-in-out;
+}
+</style>

@@ -1,8 +1,19 @@
 import { RouteRecordRaw } from 'vue-router'
 
-const loginRoute: RouteRecordRaw = {
+export const loginRoute: RouteRecordRaw = {
   path: '/login',
   name: 'Login',
   component: () => import('@/views/Login/login.vue')
 }
-export default loginRoute
+
+export const forgotRoute: RouteRecordRaw = {
+  path: '/forgot',
+  name: 'Forgot',
+  component: () => import('@/views/Login/forgot.vue')
+}
+
+export const registerRoute: RouteRecordRaw = {
+  path: '/register',
+  name: 'Register',
+  component: () => import('@/views/Login/register.vue')
+}

@@ -1,33 +1,34 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import styleImport from 'vite-plugin-style-import'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { resolve } from 'path'
+
 import WindiCSS from 'vite-plugin-windicss'
-import styleImport from 'vite-plugin-style-import'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    WindiCSS(),
     visualizer({
       filename: './node_modules/.cache/visualizer/stats.html',
       open: true,
       gzipSize: true,
       brotliSize: true
     }),
-    styleImport({
-      libs: [
-        {
-          libraryName: '@arco-design/web-vue',
-          esModule: true,
-          resolveStyle: (name) => {
-            // css
-            return `@arco-design/web-vue/es/${name}/style/css.js`
-          }
-        }
-      ]
-    })
+    // styleImport({
+    //   libs: [
+    //     {
+    //       libraryName: '@arco-design/web-vue',
+    //       esModule: true,
+    //       resolveStyle: (name) => {
+    //         // css
+    //         return `@arco-design/web-vue/es/${name}/style/css.js`
+    //       }
+    //     }
+    //   ]
+    // }),
+    WindiCSS()
   ],
   resolve: {
     alias: {

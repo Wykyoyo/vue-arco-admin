@@ -19,9 +19,13 @@
           <smsLogin @change-login-type="changeLoginType"></smsLogin>
         </template>
         <div class="login_footer select-none">
-          <a class="cursor-pointer text-[#4080FF]">找回密码</a>
+          <a class="cursor-pointer text-[#4080FF]" @click="onClickForgot">
+            找回密码
+          </a>
           <Divider direction="vertical" />
-          <a class="cursor-pointer text-[#4080FF]">快速注册</a>
+          <a class="cursor-pointer text-[#4080FF]" @click="onClickRegister">
+            快速注册
+          </a>
         </div>
       </div>
     </Card>
@@ -30,11 +34,15 @@
 <script setup lang="ts">
 import { Card, Divider } from '@arco-design/web-vue'
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import accountLogin from './components/accountLogin.vue'
 import smsLogin from './components/smsLogin.vue'
 
 import Bg from '../../assets/svg/bg.svg'
 
+const router = useRouter()
+
+// #region state相关
 interface stateModel {
   loginType: 'account' | 'sms'
 }
@@ -42,8 +50,18 @@ interface stateModel {
 const state = reactive<stateModel>({
   loginType: 'sms'
 })
+// #endregion
 
 const changeLoginType = (value: 'account' | 'sms') => {
   state.loginType = value
+}
+
+// 找回密码
+const onClickForgot = () => {
+  router.push('/forgot')
+}
+// 快捷注册
+const onClickRegister = () => {
+  router.push('/register')
 }
 </script>

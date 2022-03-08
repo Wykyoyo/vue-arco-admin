@@ -275,7 +275,7 @@ const state = reactive<stateModel>({
     describe: ''
   },
   table: {
-    tableHeight: document.documentElement.clientHeight - 320,
+    tableHeight: document.documentElement.clientHeight - 350,
     page: 1,
     pageSize: 10,
     tableData: [],

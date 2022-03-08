@@ -5,5 +5,17 @@
     <router-view></router-view>
   </div>
 </template>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import useSettingStore from './store/setting'
 
-<style></style>
+const settingStore = useSettingStore()
+
+onMounted(() => {
+  const mode = settingStore.darkMode
+  document.documentElement.classList.remove(mode === 'dark' ? 'light' : 'dark')
+  document.documentElement.classList.add(mode)
+
+  document.body.setAttribute('arco-theme', mode)
+})
+</script>
