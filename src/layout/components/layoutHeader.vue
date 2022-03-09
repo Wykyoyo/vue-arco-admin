@@ -30,6 +30,7 @@
         position="br"
         trigger="click"
         content-class="layout_header_notice_popover"
+        class="w-full sm:max-w-450px"
       >
         <div
           class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E]"

@@ -1,6 +1,23 @@
 <template>
   <div class="flex h-100vh overflow-hidden">
-    <aside class="z-3 shadow-sm dark:shadow-[#000000]">
+    <aside
+      id="parentNode"
+      class="z-3 shadow-sm dark:shadow-[#000000]"
+      v-if="state.mobile"
+    >
+      <Drawer
+        :visible="state.visibleDrawer"
+        placement="left"
+        :footer="false"
+        :closable="false"
+        popup-container="#parentNode"
+        :width="272"
+        @cancel="onCancelDrawer"
+      >
+        <LayoutAside :collapsed="state.collapsed"></LayoutAside>
+      </Drawer>
+    </aside>
+    <aside id="parentNode" class="z-3 shadow-sm dark:shadow-[#000000]" v-else>
       <LayoutAside :collapsed="state.collapsed"></LayoutAside>
     </aside>
     <div class="flex-1 flex flex-col overflow-hidden">
@@ -14,10 +31,16 @@
       <div
         class="tag h-38px flex items-center text-light-200 dark:bg-[#232324] w-full"
       >
-        <div class="mr-2px">
-          <Button size="mini" type="text" @click="onClickToRight(100)"
-            >&lt;</Button
+        <div
+          class="w-38px flex items-center justify-center cursor-pointer h-full"
+          @click="onClickToRight(100)"
+        >
+          <svg
+            class="icon text-size-16px text-[#666666] dark:text-[#FFFFFFB3]"
+            aria-hidden="true"
           >
+            <use xlink:href="#icon-left"></use>
+          </svg>
         </div>
         <div
           class="flex-1 overflow-hidden"
@@ -53,10 +76,16 @@
             <Tag class="mr-10px">案请问发萨达</Tag>
           </div>
         </div>
-        <div class="ml-2px">
-          <Button size="mini" type="text" @click="onClickToRight(-100)"
-            >></Button
+        <div
+          class="w-38px flex items-center justify-center cursor-pointer h-full"
+          @click="onClickToRight(-100)"
+        >
+          <svg
+            class="icon text-size-16px text-[#666666] dark:text-[#FFFFFFB3]"
+            aria-hidden="true"
           >
+            <use xlink:href="#icon-right"></use>
+          </svg>
         </div>
       </div>
       <main class="flex-1 bg-[#F0F2F5] overflow-y-auto dark:bg-[#2A2C2C]">
@@ -69,7 +98,7 @@
 import { computed, nextTick, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { throttle } from 'lodash-es'
 import { io } from 'socket.io-client'
-import { Tag, Button } from '@arco-design/web-vue'
+import { Tag, Button, Drawer } from '@arco-design/web-vue'
 import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 
@@ -81,11 +110,15 @@ interface stateModel {
   collapsed: boolean
   online: number
   translateX: number
+  mobile: boolean
+  visibleDrawer: boolean
 }
 const state = reactive<stateModel>({
   collapsed: false,
   online: 0,
-  translateX: 0
+  translateX: 0,
+  mobile: false,
+  visibleDrawer: false
 })
 // #endregion
 
@@ -105,9 +138,14 @@ const state = reactive<stateModel>({
 
 const resizeWindows = throttle(() => {
   const width: number = document.documentElement.clientWidth
-  if (width < 990) {
+  if (width < 640) {
+    state.mobile = true
+    state.collapsed = true
+  } else if (width >= 640 && width < 1024) {
+    state.mobile = false
     state.collapsed = true
   } else {
+    state.mobile = false
     state.collapsed = false
   }
   const outerWidth = refTagsNavScroll.value.offsetWidth
@@ -131,7 +169,17 @@ onUnmounted(() => {
 })
 
 const onClickCollapsedMenu = (value: boolean) => {
-  state.collapsed = value
+  if (state.mobile) {
+    state.visibleDrawer = true
+    state.collapsed = false
+  } else {
+    state.collapsed = value
+  }
+}
+
+const onCancelDrawer = () => {
+  state.visibleDrawer = false
+  state.collapsed = true
 }
 
 const scrollNavCss = computed(() => {
@@ -170,5 +218,8 @@ const onClickToRight = (offset: number) => {
 <style scoped>
 .scroll_menu {
   transition: transform 0.5s ease-in-out;
+}
+:deep(.arco-drawer-body) {
+  padding: 0px;
 }
 </style>

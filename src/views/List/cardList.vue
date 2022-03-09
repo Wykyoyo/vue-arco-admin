@@ -11,7 +11,10 @@
           hoverable
         >
           <div class="flex h-150px px-16px py-16px">
-            <img :src="item.url" class="rounded-full w-50px h-50px" />
+            <img
+              :src="item.url"
+              class="rounded-full w-50px h-50px hidden sm:block"
+            />
             <div class="flex-1 ml-10px">
               <div
                 class="text-size-18px font-700 py-10px tracking-wider leading-tight"
@@ -69,10 +72,12 @@ const state = reactive<stateModel>({
 
 const resizeWindows = throttle(() => {
   const width: number = document.documentElement.clientWidth
-  if (width < 1080 && width >= 760) {
+  if (width < 1280 && width >= 768) {
     state.cardSpan = 8
-  } else if (width < 760) {
+  } else if (width < 768 && width >= 640) {
     state.cardSpan = 12
+  } else if (width < 640) {
+    state.cardSpan = 24
   } else {
     state.cardSpan = 6
   }

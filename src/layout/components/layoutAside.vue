@@ -17,6 +17,7 @@
         :accordion="true"
         class="h-full"
         @menu-item-click="onClickMenuItem"
+        :defaultSelectedKeys="['/home']"
       >
         <MenuItem key="/home" data-obj="1">
           <template #icon>
@@ -44,7 +45,7 @@
           <template #icon>
             <div class="flex items-center h-full">
               <svg class="icon h-20px w-20px" aria-hidden="true">
-                <use xlink:href="#icon-table"></use>
+                <use xlink:href="#icon-edit-square"></use>
               </svg>
             </div>
           </template>

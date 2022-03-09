@@ -1,5 +1,5 @@
 <template>
-  <div class="w-450px">
+  <div class="w-full">
     <Tabs :active-key="activeKey" @change="onChangeTab">
       <TabPane
         v-for="item in tabList"
