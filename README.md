@@ -1,11 +1,32 @@
-# Vue 3 + Typescript + Vite + Vue Router + Pinia + Windi CSS
+# 项目介绍
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一个使用 Vue 3 + Typescript + Vite + Vue Router + Pinia + Windi CSS 的后台管理系统。因公司需要，创建项目频率较高，故在此封装一些最底层需要的依赖以避免重复工作，并在主干上不断完善一个后台管理系统
 
-## Recommended IDE Setup
+## 功能依赖
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+- [x] Vue Router —— 路由管理
+- [x] Pinia —— 状态管理
+- [x] WindiCss —— css 样式
+- [x] Axios —— api 请求
 
-## Type Support For `.vue` Imports in TS
+## Project setup
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm dev
+```
+
+### Compiles and minifies for production
+
+```
+npm build
+```
+
+<a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
+  <h2>MIT</h2>
+</a>
