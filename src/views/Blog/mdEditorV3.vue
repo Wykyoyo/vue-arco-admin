@@ -1,7 +1,9 @@
 <template>
   <div class="h-full flex flex-col">
     <div class="flex">
-      <Input />
+      <Input
+        class="bg-[#FFF] hover:bg-[#fbfbfb] dark:bg-[#232324] dark:hover:bg-[#1B1A1A]"
+      />
       <Button type="primary" class="ml-10px">发表</Button>
     </div>
     <div class="mt-10px flex-1">

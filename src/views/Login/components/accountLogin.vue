@@ -1,6 +1,10 @@
 <template>
-  <div class="login_form mt-45px">
-    <Form :model="state.form" class="!w-380px" ref="refAccountLogin">
+  <div class="login_form mt-45px w-full flex justify-center">
+    <Form
+      :model="state.form"
+      class="!w-full !sm:max-w-380px"
+      ref="refAccountLogin"
+    >
       <FormItem
         field="userName"
         hide-label

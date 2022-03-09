@@ -22,7 +22,7 @@
     </div>
     <div class="header_right mr-14px h-full flex items-center">
       <div
-        class="cursor-pointer h-full px-10px hover:bg-[#F5F5F5] flex items-center select-none dark:hover:bg-[#3D3D3E] dark:text-[#FFFFFFB3]"
+        class="hidden cursor-pointer h-full px-10px hover:bg-[#F5F5F5] items-center select-none dark:hover:bg-[#3D3D3E] dark:text-[#FFFFFFB3] sm:flex"
       >
         当前在线人数 <span>{{ online }} </span>人
       </div>

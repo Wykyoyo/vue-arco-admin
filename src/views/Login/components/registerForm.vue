@@ -1,7 +1,11 @@
 <template>
   <div class="mt-25px">
     <template v-if="currentStep === 1">
-      <Form :model="state.formSms" class="!w-380px" ref="refFormSms">
+      <Form
+        :model="state.formSms"
+        class="!w-full !sm:max-w-380px"
+        ref="refFormSms"
+      >
         <FormItem
           field="mobile"
           hide-label
@@ -61,7 +65,11 @@
       </Form>
     </template>
     <template v-else-if="currentStep === 2">
-      <Form :model="state.formAccount" class="!w-380px" ref="refFormAccount">
+      <Form
+        :model="state.formAccount"
+        class="!w-full !sm:max-w-380px"
+        ref="refFormAccount"
+      >
         <FormItem field="username" hide-label>
           <Input
             placeholder="请输入用户名"

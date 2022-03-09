@@ -1,9 +1,11 @@
 <template>
   <div
     :style="`background-image: url(${Bg})`"
-    class="h-100vh flex items-center justify-center dark:bg-[#232324]"
+    class="min-h-100vh flex items-center justify-center dark:bg-[#232324]"
   >
-    <Card class="w-450px h-650px shadow-xl select-none">
+    <Card
+      class="w-450px h-650px select-none bg-[#00000000] border-0px sm:bg-[var(--color-bg-2)] sm:border-1px sm:shadow-xl"
+    >
       <div class="flex flex-col items-center">
         <div class="mt-24px text-size-24px font-600">
           <span>注册用户</span>

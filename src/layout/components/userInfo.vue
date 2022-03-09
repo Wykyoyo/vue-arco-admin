@@ -8,7 +8,9 @@
           <use xlink:href="#icon-user"></use>
         </svg>
       </Avatar>
-      <span class="ml-6px dark:text-[#FFFFFFB3]">不靠谱的官方说法</span>
+      <span class="hidden ml-6px dark:text-[#FFFFFFB3] sm:block"
+        >不靠谱的官方说法</span
+      >
     </div>
     <template #content>
       <Option value="logout">
