@@ -69,13 +69,13 @@
         </template>
       </Table>
     </Card>
+    <!-- :width="750" -->
     <Modal
       :visible="state.columnSet.show"
       :footer="false"
       :closable="false"
       :align-center="false"
-      :width="750"
-      modal-class="search_table_column_set"
+      modal-class="search_table_column_set w-full sm:w-750px"
     >
       <template #title>
         <div class="w-full flex items-center justify-between">

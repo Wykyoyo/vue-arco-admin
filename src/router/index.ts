@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import useUserStore from '../store/user'
 import routes from './routes'
 
 const router = createRouter({
@@ -7,7 +8,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  const { path } = to
+  const userStore = useUserStore()
+  if (userStore.userInfo.userName === '' && path !== '/login') {
+    next({ path: '/login' })
+  }
   next()
 })
 

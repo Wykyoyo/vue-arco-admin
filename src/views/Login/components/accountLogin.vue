@@ -61,10 +61,12 @@
 import { Form, Input, Button } from '@arco-design/web-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import useUserStore, { IUserInfo } from '../../../store/user'
 
 const FormItem = Form.Item
 const refAccountLogin = ref()
 const router = useRouter()
+const userStore = useUserStore()
 
 // #region 验证规则
 const validatorUserName = [
@@ -108,6 +110,10 @@ const state = reactive<stateModel>({
 const onLogin = () => {
   refAccountLogin.value.validate((errors: any) => {
     if (errors === undefined) {
+      const userInfo: IUserInfo = {
+        userName: state.form.userName
+      }
+      userStore.updateUserInfo(userInfo)
       router.push('/')
     }
   })

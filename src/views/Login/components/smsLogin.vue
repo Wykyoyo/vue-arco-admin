@@ -65,10 +65,12 @@
 import { Form, Input, Button } from '@arco-design/web-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import useUserStore, { IUserInfo } from '../../../store/user'
 
 const router = useRouter()
 const refSmsLogin = ref()
 const FormItem = Form.Item
+const userStore = useUserStore()
 
 interface formModel {
   mobile: string
@@ -141,6 +143,10 @@ const onGetSmsCode = () => {
 const onLogin = () => {
   refSmsLogin.value.validate((errors: any) => {
     if (errors === undefined) {
+      const userInfo: IUserInfo = {
+        userName: '不靠谱的官方说法'
+      }
+      userStore.updateUserInfo(userInfo)
       router.push('/')
     }
   })
