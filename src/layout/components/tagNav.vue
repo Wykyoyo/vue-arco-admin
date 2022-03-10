@@ -20,31 +20,35 @@
       @mousewheel.prevent="onMounseScroll"
     >
       <div
-        class="scroll_menu whitespace-nowrap inline-block"
+        class="scroll_menu whitespace-nowrap inline-flex items-center"
         ref="refScrollBody"
         :style="scrollNavCss"
       >
-        <Tag class="mr-10px">首页</Tag>
-        <Tag class="mr-10px">首页2</Tag>
-        <Tag class="mr-10px">首页1</Tag>
-        <Tag class="mr-10px">首页3</Tag>
-        <Tag class="mr-10px">首页4</Tag>
-        <Tag class="mr-10px">首页5</Tag>
-        <Tag class="mr-10px">首页6</Tag>
-        <Tag class="mr-10px">首页7</Tag>
-        <Tag class="mr-10px">首页8</Tag>
-        <Tag class="mr-10px">首页9asd</Tag>
-        <Tag class="mr-10px">首页10sadsa</Tag>
-        <Tag class="mr-10px">首页11fsadw</Tag>
-        <Tag class="mr-10px">按实际龙卷风三</Tag>
-        <Tag class="mr-10px">案发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
-        <Tag class="mr-10px">案请问发萨达</Tag>
+        <span
+          class="tag inline-block h-24px mr-10px cursor-pointer text-[#666666] dark:text-[#FFFFFFB3] text-size-12px"
+          v-for="item in menuStore.tagNavList"
+          :key="item.path"
+          @click="onClickTagNav(item.path)"
+        >
+          <div
+            class="flex items-center h-full bg-[#F2F3F5] dark:bg-[#343435] px-10px rounded-[3px]"
+            v-if="item.path !== menuStore.currentRoute.currentRoutePath"
+          >
+            <span>{{ item.meta?.name }}</span>
+            <svg class="icon ml-4px inline-block" aria-hidden="true">
+              <use xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+          <div
+            class="flex items-center h-full bg-[#F2F3F5] dark:bg-[#343435] px-10px rounded-[3px] text-[#3C7EFF]"
+            v-else
+          >
+            <span>{{ item.meta?.name }}</span>
+            <svg class="icon inline-block ml-4px" aria-hidden="true">
+              <use xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+        </span>
       </div>
     </div>
     <div
@@ -61,11 +65,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Tag } from '@arco-design/web-vue'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import useMenuStore from '../../store/menu'
 
 const refTagsNavScroll = ref()
 const refScrollBody = ref()
+const route = useRoute()
+const router = useRouter()
+const menuStore = useMenuStore()
 
 // #region props相关
 interface IProps {
@@ -127,6 +135,29 @@ const onMounseScroll = (value: any) => {
     delta = wheelDelta || -(detail || 0) * 40
   }
   onClickMove(delta)
+}
+
+watch(
+  () => route.path,
+  () => {
+    menuStore.addTagNav(route)
+    menuStore.updateCurrentRoutePath(
+      route.path,
+      (route.meta?.openKey ?? '') as string
+    )
+  }
+)
+
+onMounted(() => {
+  menuStore.addTagNav(route)
+  menuStore.updateCurrentRoutePath(
+    route.path,
+    (route.meta?.openKey ?? '') as string
+  )
+})
+
+const onClickTagNav = (path: string) => {
+  router.push(path)
 }
 </script>
 <style scoped>

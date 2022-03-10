@@ -12,68 +12,19 @@
       >
     </div>
     <div class="overflow-y-auto h-full">
-      <Menu
+      <AsideMenu
         :collapsed="collapsed"
-        :accordion="true"
-        class="h-full"
-        @menu-item-click="onClickMenuItem"
-        :defaultSelectedKeys="['/home']"
-      >
-        <MenuItem key="/home" data-obj="1">
-          <template #icon>
-            <div class="flex items-center h-full">
-              <svg class="icon h-20px w-20px" aria-hidden="true">
-                <use xlink:href="#icon-dashboard"></use>
-              </svg>
-            </div>
-          </template>
-          首页
-        </MenuItem>
-        <SubMenu>
-          <template #icon>
-            <div class="flex items-center h-full">
-              <svg class="icon h-20px w-20px" aria-hidden="true">
-                <use xlink:href="#icon-table"></use>
-              </svg>
-            </div>
-          </template>
-          <template #title> 列表页 </template>
-          <MenuItem key="/list/search-table">查询表格</MenuItem>
-          <MenuItem key="/list/card-list">标准列表</MenuItem>
-        </SubMenu>
-        <SubMenu>
-          <template #icon>
-            <div class="flex items-center h-full">
-              <svg class="icon h-20px w-20px" aria-hidden="true">
-                <use xlink:href="#icon-edit-square"></use>
-              </svg>
-            </div>
-          </template>
-          <template #title> 博客 </template>
-          <MenuItem key="/blog/md-editor-v3">发表博客</MenuItem>
-        </SubMenu>
-        <SubMenu>
-          <template #icon>
-            <div class="flex items-center h-full">
-              <svg class="icon h-20px w-20px" aria-hidden="true">
-                <use xlink:href="#icon-icon_Order"></use>
-              </svg>
-            </div>
-          </template>
-          <template #title> 指令 </template>
-          <MenuItem key="/directive/copy-directive">复制指令</MenuItem>
-        </SubMenu>
-      </Menu>
+        :selected-key="menuStore.currentRoute.currentRoutePath"
+        :open-key="menuStore.currentRoute.openKey"
+      ></AsideMenu>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { Menu } from '@arco-design/web-vue'
-import { useRouter } from 'vue-router'
+import useMenuStore from '../../store/menu'
+import AsideMenu from './asideMenu.vue'
 
-const MenuItem = Menu.Item
-const { SubMenu } = Menu
-const router = useRouter()
+const menuStore = useMenuStore()
 
 // #region props相关
 interface propsModel {
@@ -83,8 +34,4 @@ const props = withDefaults(defineProps<propsModel>(), {
   collapsed: false
 })
 // #endregion
-
-const onClickMenuItem = (key: string) => {
-  router.push(key)
-}
 </script>

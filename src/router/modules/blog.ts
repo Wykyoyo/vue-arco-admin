@@ -10,7 +10,10 @@ const blogRoute: RouteRecordRaw = {
     {
       path: '/blog/md-editor-v3',
       name: 'MdEditorV3',
-      meta: {},
+      meta: {
+        name: '发表博客',
+        openKey: '/blog'
+      },
       component: () => import('@/views/Blog/mdEditorV3.vue')
     }
   ]

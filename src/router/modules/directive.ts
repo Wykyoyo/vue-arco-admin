@@ -10,7 +10,10 @@ const directiveRoute: RouteRecordRaw = {
     {
       path: '/directive/copy-directive',
       name: 'CopyDirective',
-      meta: {},
+      meta: {
+        name: '复制指令',
+        openKey: '/directive'
+      },
       component: () => import('@/views/Directives/copyDirective.vue')
     }
   ]
