@@ -8,9 +8,9 @@
           <use xlink:href="#icon-user"></use>
         </svg>
       </Avatar>
-      <span class="hidden ml-6px dark:text-[#FFFFFFB3] sm:block"
-        >不靠谱的官方说法</span
-      >
+      <span class="hidden ml-6px dark:text-[#FFFFFFB3] sm:block">
+        {{ userStore.userInfo.userName }}
+      </span>
     </div>
     <template #content>
       <Option value="logout">
@@ -27,13 +27,17 @@
 <script setup lang="ts">
 import { Dropdown, Avatar } from '@arco-design/web-vue'
 import { useRouter } from 'vue-router'
+import useUserStore from '../../store/user'
 
 const { Option } = Dropdown
 const router = useRouter()
+const userStore = useUserStore()
+
 // #region 用户名下拉菜单相关
 const onSelect = (value: String) => {
   switch (value) {
     case 'logout':
+      userStore.logout()
       router.push('/login')
       break
 
