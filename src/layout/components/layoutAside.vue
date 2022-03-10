@@ -52,6 +52,17 @@
           <template #title> 博客 </template>
           <MenuItem key="/blog/md-editor-v3">发表博客</MenuItem>
         </SubMenu>
+        <SubMenu>
+          <template #icon>
+            <div class="flex items-center h-full">
+              <svg class="icon h-20px w-20px" aria-hidden="true">
+                <use xlink:href="#icon-icon_Order"></use>
+              </svg>
+            </div>
+          </template>
+          <template #title> 指令 </template>
+          <MenuItem key="/directive/copy-directive">复制指令</MenuItem>
+        </SubMenu>
       </Menu>
     </div>
   </div>
