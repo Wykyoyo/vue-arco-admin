@@ -10,7 +10,10 @@ const dashboardRoute: RouteRecordRaw = {
     {
       path: '/dashboard/analysis',
       name: 'Analysis',
-      meta: {},
+      meta: {
+        name: '数据分析',
+        openKey: '/dashboard'
+      },
       component: () => import('@/views/DashBoard/analysis.vue')
     }
   ]

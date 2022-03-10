@@ -10,7 +10,10 @@ const homeRoute: RouteRecordRaw = {
     {
       path: '/home',
       name: 'HomeIndex',
-      meta: {},
+      meta: {
+        name: '首页',
+        openKey: '/'
+      },
       component: () => import('@/views/home.vue')
     }
   ]

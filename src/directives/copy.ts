@@ -1,4 +1,5 @@
 import type { Directive, App } from 'vue'
+import { Notification } from '@arco-design/web-vue'
 
 let elValue = ''
 const copyDirective: Directive = {
@@ -6,7 +7,7 @@ const copyDirective: Directive = {
     elValue = binding.value
     const handler = () => {
       if (!elValue) {
-        console.log('请输入要复制的内容')
+        Notification.error('请输入要复制的内容!')
         return
       }
       // 创建textarea标签
@@ -25,6 +26,7 @@ const copyDirective: Directive = {
       const res = document.execCommand('Copy')
       // 移除textarea标签
       document.body.removeChild(textarea)
+      Notification.success('复制成功!')
     }
     el.addEventListener('click', () => {
       handler()

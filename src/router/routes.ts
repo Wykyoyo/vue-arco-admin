@@ -1,5 +1,6 @@
 import blogRoute from './modules/blog'
 import dashboardRoute from './modules/dashboard'
+import directiveRoute from './modules/directive'
 import homeRoute from './modules/home'
 import listRoute from './modules/list'
 import { loginRoute, forgotRoute, registerRoute } from './modules/login'
@@ -13,5 +14,6 @@ export default [
   forgotRoute,
   registerRoute,
   dashboardRoute,
-  blogRoute
+  blogRoute,
+  directiveRoute
 ]

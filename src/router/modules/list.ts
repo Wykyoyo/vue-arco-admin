@@ -10,13 +10,19 @@ const listRoute: RouteRecordRaw = {
     {
       path: '/list/search-table',
       name: 'SearchTable',
-      meta: {},
+      meta: {
+        name: '查询表格',
+        openKey: '/list'
+      },
       component: () => import('@/views/List/searchTable.vue')
     },
     {
       path: '/list/card-list',
       name: 'CardList',
-      meta: {},
+      meta: {
+        name: '卡片列表',
+        openKey: '/list'
+      },
       component: () => import('@/views/List/cardList.vue')
     }
   ]

@@ -20,7 +20,7 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.17.0",
+    "@arco-design/web-vue": "^2.18.1",
     "@types/lodash-es": "^4.17.6",
     "@types/mockjs": "^1.0.6",
     "@types/node": "^17.0.10",

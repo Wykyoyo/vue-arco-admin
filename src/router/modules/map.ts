@@ -10,7 +10,10 @@ const mapRoute: RouteRecordRaw = {
     {
       path: '/map/base-map',
       name: 'BaseMap',
-      meta: {},
+      meta: {
+        name: '基础地图',
+        openKey: '/map'
+      },
       component: () => import('@/views/Map/baseMap.vue')
     }
   ]
