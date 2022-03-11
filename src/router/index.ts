@@ -10,7 +10,12 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const { path } = to
   const userStore = useUserStore()
-  if (userStore.userInfo.userName === '' && path !== '/login') {
+  if (
+    userStore.userInfo.userName === '' &&
+    path !== '/login' &&
+    path !== '/register' &&
+    path !== '/forgot'
+  ) {
     next({ path: '/login' })
   }
   next()
