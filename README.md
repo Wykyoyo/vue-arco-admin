@@ -4,6 +4,10 @@
 
 [预览地址](https://wyk1995.gitee.io/vue3_base)
 
+![vue_admin_login](./src/assets/gif/vue_admin_login.gif)
+
+![vue_admin_home](./src/assets/gif/vue_admin_home.gif)
+
 ## 功能依赖
 
 - [x] Vue Router —— 路由管理
