@@ -4,6 +4,7 @@ import {
   RouteLocationNormalizedLoaded,
   RouteMeta,
   RouteParams,
+  Router,
   RouteRecordName
 } from 'vue-router'
 
@@ -66,6 +67,30 @@ const useMenuStore = defineStore('menu', {
         openKey
       }
       localStorage.setItem('currentRoute', JSON.stringify(this.currentRoute))
+    },
+    closeTagNav(router: Router, path: string, type: string = '') {
+      if (type === '') {
+        // 关闭某一个标签页
+        const closeIndex = this.tagNavList.findIndex(
+          (item) => item.path === path
+        )
+        if (this.currentRoute.currentRoutePath === path) {
+          // 关闭当前打开的标签页
+          const newRoute: ITagNavList =
+            this.tagNavList.length - 1 === closeIndex
+              ? this.tagNavList[this.tagNavList.length - 2]
+              : this.tagNavList[closeIndex + 1]
+
+          this.currentRoute = {
+            currentRoutePath: newRoute.path,
+            openKey: newRoute.meta.openKey as string
+          }
+          router.push(newRoute.path)
+        }
+        this.tagNavList.splice(closeIndex, 1)
+      }
+      localStorage.setItem('currentRoute', JSON.stringify(this.currentRoute))
+      localStorage.setItem('tagNavList', JSON.stringify(this.tagNavList))
     }
   }
 })

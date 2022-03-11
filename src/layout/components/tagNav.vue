@@ -31,20 +31,19 @@
           @click="onClickTagNav(item.path)"
         >
           <div
-            class="flex items-center h-full bg-[#F2F3F5] dark:bg-[#343435] px-10px rounded-[3px]"
-            v-if="item.path !== menuStore.currentRoute.currentRoutePath"
+            :class="`flex items-center h-full bg-[#F2F3F5] dark:bg-[#343435] px-10px rounded-[3px] ${
+              item.path === menuStore.currentRoute.currentRoutePath
+                ? 'text-[#3C7EFF]'
+                : ''
+            }`"
           >
             <span>{{ item.meta?.name }}</span>
-            <svg class="icon ml-4px inline-block" aria-hidden="true">
-              <use xlink:href="#icon-close"></use>
-            </svg>
-          </div>
-          <div
-            class="flex items-center h-full bg-[#F2F3F5] dark:bg-[#343435] px-10px rounded-[3px] text-[#3C7EFF]"
-            v-else
-          >
-            <span>{{ item.meta?.name }}</span>
-            <svg class="icon inline-block ml-4px" aria-hidden="true">
+            <svg
+              class="icon inline-block ml-4px"
+              aria-hidden="true"
+              v-if="item.path !== '/home'"
+              @click.stop="onCloseTagNav(item.path)"
+            >
               <use xlink:href="#icon-close"></use>
             </svg>
           </div>
@@ -158,6 +157,10 @@ onMounted(() => {
 
 const onClickTagNav = (path: string) => {
   router.push(path)
+}
+
+const onCloseTagNav = (path: string) => {
+  menuStore.closeTagNav(router, path)
 }
 </script>
 <style scoped>
