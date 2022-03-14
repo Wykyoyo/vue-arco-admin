@@ -20,7 +20,7 @@
       @mousewheel.prevent="onMounseScroll"
     >
       <div
-        class="scroll_menu whitespace-nowrap inline-flex items-center"
+        class="scroll_menu whitespace-nowrap inline-flex items-center select-none"
         ref="refScrollBody"
         :style="scrollNavCss"
       >

@@ -130,6 +130,7 @@ const drawerVisible = computed(() => {
 
 const route = useRoute()
 const menuStore = useMenuStore()
+
 watch(
   () => {
     return route.path

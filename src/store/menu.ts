@@ -54,11 +54,13 @@ const useMenuStore = defineStore('menu', {
   actions: {
     addTagNav(route: RouteLocationNormalizedLoaded) {
       const { path, name, params, query, meta } = route
-      const newRoute = { path, name, params, query, meta }
-      const index = this.tagNavList.findIndex((item) => item.path === path)
-      if (index === -1) {
-        this.tagNavList.push(newRoute)
-        localStorage.setItem('tagNavList', JSON.stringify(this.tagNavList))
+      if ((meta.name ?? '') !== '') {
+        const newRoute = { path, name, params, query, meta }
+        const index = this.tagNavList.findIndex((item) => item.path === path)
+        if (index === -1) {
+          this.tagNavList.push(newRoute)
+          localStorage.setItem('tagNavList', JSON.stringify(this.tagNavList))
+        }
       }
     },
     updateCurrentRoutePath(path: string, openKey: string) {

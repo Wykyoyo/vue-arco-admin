@@ -2,9 +2,9 @@
   <Menu
     :collapsed="collapsed"
     class="h-full"
-    @menu-item-click="onClickMenuItem"
     :selected-keys="[selectedKey]"
     :auto-open-selected="true"
+    @menu-item-click="onClickMenuItem"
   >
     <MenuItem key="/home" data-obj="1">
       <template #icon>
@@ -16,6 +16,17 @@
       </template>
       首页
     </MenuItem>
+    <SubMenu key="/dashboard">
+      <template #icon>
+        <div class="flex items-center h-full">
+          <svg class="icon h-20px w-20px" aria-hidden="true">
+            <use xlink:href="#icon-Report"></use>
+          </svg>
+        </div>
+      </template>
+      <template #title> 大屏可视化 </template>
+      <MenuItem key="/dashboard/analysis">数据分析</MenuItem>
+    </SubMenu>
     <SubMenu key="/list">
       <template #icon>
         <div class="flex items-center h-full">
@@ -50,7 +61,7 @@
       <template #title> 指令 </template>
       <MenuItem key="/directive/copy-directive">复制指令</MenuItem>
     </SubMenu>
-    <SubMenu key="/directive">
+    <SubMenu key="/exception">
       <template #icon>
         <div class="flex items-center h-full">
           <svg class="icon h-20px w-20px" aria-hidden="true">
