@@ -17,3 +17,9 @@ export const registerRoute: RouteRecordRaw = {
   name: 'Register',
   component: () => import('@/views/Login/register.vue')
 }
+
+export const notfoundRoute: RouteRecordRaw = {
+  path: '/:pathMatch(.*)',
+  name: 'NotFound',
+  component: () => import('@/views/exception/404.vue')
+}

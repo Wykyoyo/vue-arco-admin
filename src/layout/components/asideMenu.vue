@@ -1,11 +1,9 @@
 <template>
   <Menu
     :collapsed="collapsed"
-    :accordion="true"
     class="h-full"
     @menu-item-click="onClickMenuItem"
     :selected-keys="[selectedKey]"
-    :default-open-keys="[openKey]"
     :auto-open-selected="true"
   >
     <MenuItem key="/home" data-obj="1">
@@ -51,6 +49,19 @@
       </template>
       <template #title> 指令 </template>
       <MenuItem key="/directive/copy-directive">复制指令</MenuItem>
+    </SubMenu>
+    <SubMenu key="/directive">
+      <template #icon>
+        <div class="flex items-center h-full">
+          <svg class="icon h-20px w-20px" aria-hidden="true">
+            <use xlink:href="#icon-warn1"></use>
+          </svg>
+        </div>
+      </template>
+      <template #title> 异常页 </template>
+      <MenuItem key="/exception/403">403</MenuItem>
+      <MenuItem key="/exception/404">404</MenuItem>
+      <MenuItem key="/exception/500">500</MenuItem>
     </SubMenu>
   </Menu>
 </template>

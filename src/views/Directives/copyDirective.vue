@@ -1,8 +1,8 @@
 <template>
   <div>
     <Card>
-      <div class="w-350px flex flex-wrap">
-        <Input v-model="state.copyValue" />
+      <div class="flex flex-wrap">
+        <Input v-model="state.copyValue" class="w-350px" />
         <Button type="primary" v-copy-directive="state.copyValue">复制</Button>
       </div>
     </Card>

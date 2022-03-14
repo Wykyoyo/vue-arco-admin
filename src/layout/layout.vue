@@ -37,13 +37,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { throttle } from 'lodash-es'
 import { io } from 'socket.io-client'
 import { Drawer } from '@arco-design/web-vue'
+import { useRoute } from 'vue-router'
 import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 import TagNav from './components/tagNav.vue'
+import useMenuStore from '../store/menu'
 
 // #region state相关
 interface stateModel {
@@ -125,6 +127,21 @@ const drawerVisible = computed(() => {
   }
   return false
 })
+
+const route = useRoute()
+const menuStore = useMenuStore()
+watch(
+  () => {
+    return route.path
+  },
+  () => {
+    menuStore.addTagNav(route)
+    menuStore.updateCurrentRoutePath(
+      route.path,
+      (route.meta?.openKey ?? '') as string
+    )
+  }
+)
 </script>
 <style scoped>
 :deep(.arco-drawer-body) {
