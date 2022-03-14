@@ -136,17 +136,6 @@ const onMounseScroll = (value: any) => {
   onClickMove(delta)
 }
 
-watch(
-  () => route.path,
-  () => {
-    menuStore.addTagNav(route)
-    menuStore.updateCurrentRoutePath(
-      route.path,
-      (route.meta?.openKey ?? '') as string
-    )
-  }
-)
-
 onMounted(() => {
   menuStore.addTagNav(route)
   menuStore.updateCurrentRoutePath(

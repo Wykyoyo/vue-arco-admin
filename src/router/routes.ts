@@ -1,9 +1,15 @@
 import blogRoute from './modules/blog'
 import dashboardRoute from './modules/dashboard'
 import directiveRoute from './modules/directive'
+import exceptionRoute from './modules/exception'
 import homeRoute from './modules/home'
 import listRoute from './modules/list'
-import { loginRoute, forgotRoute, registerRoute } from './modules/login'
+import {
+  loginRoute,
+  forgotRoute,
+  registerRoute,
+  notfoundRoute
+} from './modules/login'
 import mapRoute from './modules/map'
 
 export default [
@@ -15,5 +21,7 @@ export default [
   registerRoute,
   dashboardRoute,
   blogRoute,
-  directiveRoute
+  directiveRoute,
+  exceptionRoute,
+  notfoundRoute
 ]
