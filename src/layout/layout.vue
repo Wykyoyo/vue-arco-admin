@@ -46,6 +46,9 @@ import LayoutAside from './components/layoutAside.vue'
 import LayoutHeader from './components/layoutHeader.vue'
 import TagNav from './components/tagNav.vue'
 import useMenuStore from '../store/menu'
+import useSettingStore from '../store/setting'
+
+const settingStore = useSettingStore()
 
 // #region state相关
 interface stateModel {
@@ -82,6 +85,7 @@ const state = reactive<stateModel>({
 
 const resizeWindows = throttle(() => {
   const width: number = document.documentElement.clientWidth
+  settingStore.updateClientWidth(width)
   state.width = width
   if (width < 640) {
     state.equipment = 'mobile'
