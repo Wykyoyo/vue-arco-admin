@@ -1,1 +1,0 @@
-import{_ as e}from"./ExceptionPage.879e614a.js";import{a as s,b as r,f as c,g as u}from"./vendor.98d60208.js";var a="./assets/500.0d484358.svg";const p=s({setup(o){return(t,n)=>(r(),c(e,{src:u(a),code:500,describe:"\u62B1\u6B49\uFF0C\u670D\u52A1\u5668\u51FA\u9519\u4E86"},null,8,["src"]))}});export{p as default};
