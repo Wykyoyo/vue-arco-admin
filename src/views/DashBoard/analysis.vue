@@ -113,7 +113,15 @@
 </template>
 <script lang="ts" setup>
 import { Card, Grid } from '@arco-design/web-vue'
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  watch,
+  nextTick,
+  shallowReactive
+} from 'vue'
 // eslint-disable-next-line import/order
 import useSettingStore from '../../store/setting'
 // #region echars引用相关
@@ -133,6 +141,7 @@ echarts.use([GridComponent, TooltipComponent, BarChart, CanvasRenderer])
 type EChartsOption = echarts.ComposeOption<
   GridComponentOption | BarSeriesOption | TooltipComponentOption
 >
+
 // #endregion
 const settingStore = useSettingStore()
 const { Col, Row } = Grid
@@ -232,6 +241,15 @@ const state = reactive<IState>({
 })
 // #endregion
 
+// #region 专门用来存储echars实例具体原因见https://github.com/apache/echarts/issues/16681
+interface IStateEchart {
+  echarts: echarts.ECharts[]
+}
+const stateEchart = shallowReactive<IStateEchart>({
+  echarts: []
+})
+// #endregion
+
 // #region 自动滚动
 const AutoScroll = () => {
   const divScroll = refAuthor.value
@@ -261,7 +279,7 @@ const initPublishContentEchar = () => {
   const chartDom = document.getElementById('content_publish_echar')
   if (chartDom) {
     const myChart = echarts.init(chartDom)
-    state.echars.push(myChart)
+    stateEchart.echarts.push(myChart)
     const option: EChartsOption = {
       grid: {
         left: '3%',
@@ -370,7 +388,6 @@ const initPublishContentEchar = () => {
         }
       ]
     }
-
     myChart.setOption(option)
   }
 }
@@ -380,7 +397,7 @@ const initPublishContentEchar = () => {
 watch(
   () => settingStore.darkMode,
   () => {
-    state.echars.forEach((item) => {
+    stateEchart.echarts.forEach((item) => {
       const option: EChartsOption = {
         xAxis: [
           {
@@ -415,7 +432,6 @@ watch(
         ]
       }
       item.setOption(option)
-      // item.resize()
     })
   }
 )
@@ -423,7 +439,7 @@ watch(
 watch(
   () => settingStore.clientWidth,
   () => {
-    state.echars.forEach((item) => {
+    stateEchart.echarts.forEach((item) => {
       item.resize()
     })
   }
@@ -431,8 +447,10 @@ watch(
 
 onMounted(() => {
   initPublishContentEchar()
+
   AutoScroll()
 })
+
 onUnmounted(() => {
   clearInterval(state.authorInterval)
 })
