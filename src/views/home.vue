@@ -9,8 +9,6 @@ import { nextTick, onMounted, reactive } from 'vue'
 import { getGeoJson } from '../utils/utils'
 // #region echars引用相关
 import * as echarts from 'echarts/core'
-// import { GridComponent, GridComponentOption } from 'echarts/components'
-// import { BarChart, BarSeriesOption } from 'echarts/charts'
 import { MapChart, MapSeriesOption } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 
