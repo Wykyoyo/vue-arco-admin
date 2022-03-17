@@ -26,6 +26,7 @@
       </template>
       <template #title> 大屏可视化 </template>
       <MenuItem key="/dashboard/analysis">数据分析</MenuItem>
+      <MenuItem key="/dashboard/3dmap">3D地图（原首页）</MenuItem>
     </SubMenu>
     <SubMenu key="/list">
       <template #icon>

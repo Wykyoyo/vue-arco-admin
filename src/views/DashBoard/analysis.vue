@@ -88,7 +88,7 @@
                   v-for="(item, index) in state.popularAuthor"
                   :key="item.name"
                 >
-                  <div class="body_item flex">
+                  <div class="body_item flex leading-[28px]">
                     <div class="mr-10px w-80px">
                       <span>{{ index + 1 }}</span>
                     </div>
@@ -119,11 +119,11 @@ import {
   reactive,
   ref,
   watch,
-  nextTick,
   shallowReactive
 } from 'vue'
 // eslint-disable-next-line import/order
 import useSettingStore from '../../store/setting'
+
 // #region echars引用相关
 import * as echarts from 'echarts/core'
 import {
@@ -135,14 +135,15 @@ import {
 import { BarChart, BarSeriesOption } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 import { TopLevelFormatterParams } from 'echarts/types/dist/shared'
+import { getPopularAuthorData } from '../../api/dashBoard'
 
 echarts.use([GridComponent, TooltipComponent, BarChart, CanvasRenderer])
 
 type EChartsOption = echarts.ComposeOption<
   GridComponentOption | BarSeriesOption | TooltipComponentOption
 >
-
 // #endregion
+
 const settingStore = useSettingStore()
 const { Col, Row } = Grid
 const refAuthor = ref()
@@ -159,83 +160,7 @@ interface IState {
   echars: echarts.ECharts[]
 }
 const state = reactive<IState>({
-  popularAuthor: [
-    {
-      name: '张三',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三1',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三2',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三3',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三4',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三5',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三7',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三8',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三9',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三42',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三54',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三541',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三542',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三5428',
-      contentNumber: 156,
-      clickNumber: 246
-    },
-    {
-      name: '张三5427',
-      contentNumber: 156,
-      clickNumber: 246
-    }
-  ],
+  popularAuthor: [],
   authorInterval: null,
   echars: []
 })
@@ -331,9 +256,6 @@ const initPublishContentEchar = () => {
           },
           axisLabel: {
             color: settingStore.darkMode === 'dark' ? '#fff' : '#666666' // X轴文字颜色
-            // formatter(value) {
-            //   return ConvertNumToK(value)
-            // }
           }
         }
       ],
@@ -381,10 +303,6 @@ const initPublishContentEchar = () => {
             return data
           },
           className: 'echarts-tooltip-diy'
-          // textStyle: {
-          //   color: '#FFF',
-          //   fontWeight: '500'
-          // }
         }
       ]
     }
@@ -394,6 +312,22 @@ const initPublishContentEchar = () => {
 
 // #endregion
 
+// #region 获取热门作者榜单
+interface IRequest {
+  total: number
+  data: IPopularAuthor[]
+}
+const GetPopularAuthorData = () => {
+  getPopularAuthorData().then((res) => {
+    const { code, data }: { code: number; data: IRequest } = res
+    if (code === 200) {
+      state.popularAuthor = data.data
+    }
+  })
+}
+// #endregion
+
+// #region 动态调整表格暗黑模式
 watch(
   () => settingStore.darkMode,
   () => {
@@ -435,6 +369,7 @@ watch(
     })
   }
 )
+// #endregion
 
 watch(
   () => settingStore.clientWidth,
@@ -447,7 +382,7 @@ watch(
 
 onMounted(() => {
   initPublishContentEchar()
-
+  GetPopularAuthorData()
   AutoScroll()
 })
 
