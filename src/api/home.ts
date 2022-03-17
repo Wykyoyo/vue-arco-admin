@@ -9,5 +9,5 @@ export const mapData = () => {
 }
 
 export const getMapData = (data: IMapData[]) => {
-  return axios.get('/home/GetMapData', data)
+  return axios.post('/home/getMapData', data)
 }
