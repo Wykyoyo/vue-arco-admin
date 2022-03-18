@@ -1,5 +1,18 @@
 <template>
   <div class="h-full px-0 py-0">
+    <div class="absolute flex z-2 px-10px py-10px">
+      <div
+        class="cursor-pointer text-size-18px font-700 text-[#000918] dark:text-[#666666]"
+        v-for="(item, index) in state.enterMap"
+        :key="item.adcode"
+        @click="onClickGoMap(item.adcode)"
+      >
+        {{ item.name }}
+        <span class="mx-4px" v-if="index !== state.enterMap.length - 1">
+          >>
+        </span>
+      </div>
+    </div>
     <div id="map_echar" class="w-full h-full"></div>
   </div>
 </template>
@@ -16,30 +29,49 @@ import {
   VisualMapComponent,
   GridComponent
 } from 'echarts/components'
-import { MapChart, MapSeriesOption } from 'echarts/charts'
+import {
+  MapChart,
+  MapSeriesOption,
+  EffectScatterChart,
+  EffectScatterSeriesOption
+} from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 import { IMapData } from '../types/home'
 import { getMapData } from '../api/home'
 
 echarts.use([
   MapChart,
+  EffectScatterChart,
   CanvasRenderer,
   TooltipComponent,
   VisualMapComponent,
   GridComponent
 ])
 
-type EChartsOption = echarts.ComposeOption<MapSeriesOption>
+type EChartsOption = echarts.ComposeOption<
+  MapSeriesOption | EffectScatterSeriesOption
+>
 // #endregion
 
 // #region state相关
+interface IEnterMap {
+  name: string
+  adcode: number
+}
 interface stateModel {
   geoJson: any
   mapData: IMapData[]
+  enterMap: IEnterMap[]
 }
 const state = reactive<stateModel>({
   geoJson: null,
-  mapData: []
+  mapData: [],
+  enterMap: [
+    {
+      name: '全国',
+      adcode: 100000
+    }
+  ]
 })
 // #endregion
 
@@ -85,9 +117,8 @@ const initMapEchar = (
       },
       geo: {
         map: mapName,
-        zoom: 1,
+        zoom: 1.1,
         roam: true,
-        center: [104.37, 35.52],
         label: {
           normal: {
             show: true,
@@ -174,11 +205,62 @@ const initMapEchar = (
           zoom: 1.3, // 缩放比例
           selectedMode: false, // 不让单独选中
           data: mapData
+        },
+        {
+          name: '散点',
+          type: 'effectScatter',
+          coordinateSystem: 'geo',
+          rippleEffect: {
+            brushType: 'fill'
+          },
+          itemStyle: {
+            color(params: any) {
+              const value = params.value[2]
+
+              if (value > 0) {
+                return '#FF9700'
+              }
+              return '#1AFFBF'
+            },
+            shadowBlur: 10,
+            shadowColor: '#333'
+          },
+          data: pointData,
+          symbolSize() {
+            return 10
+          },
+          showEffectOn: 'render' // 加载完毕显示特效
         }
       ]
     }
     mapEchar.setOption(options)
+    mapEchar.off('click')
+    mapEchar.on('click', onClickEchartMap)
   }
+}
+
+// 点击下钻
+const onClickEchartMap = (params: any) => {
+  if (state.enterMap.length < 3) {
+    const { data } = params
+    const index = state.enterMap.findIndex(
+      (item) => item.adcode === data.adcode
+    )
+    if (index === -1) {
+      state.enterMap.push({
+        name: data.name,
+        adcode: data.adcode
+      })
+      GetGeoJson(data.adcode)
+    }
+  }
+}
+
+// 点击返回某一级
+const onClickGoMap = (adcode: number) => {
+  const index = state.enterMap.findIndex((item) => item.adcode === adcode)
+  state.enterMap.length = index + 1
+  GetGeoJson(adcode)
 }
 
 interface IRequest {
@@ -188,8 +270,9 @@ interface IRequest {
   }
   message: string
 }
-const GetGeoJson = () => {
-  getGeoJson(100000).then((res: any) => {
+
+const GetGeoJson = (adcode: number) => {
+  getGeoJson(adcode).then((res: any) => {
     const mockData: IMapData[] = res.features.map((item: any) => {
       return {
         name: item.properties.name,
@@ -254,7 +337,7 @@ const ComputeMapData = () => {
 
 onMounted(() => {
   nextTick(() => {
-    GetGeoJson()
+    GetGeoJson(100000)
   })
 })
 </script>
