@@ -246,7 +246,7 @@ const initMapEchar = (
         }
       ]
     }
-    mapEchar.setOption(options)
+    mapEchar.setOption(options, true)
     mapEchar.off('click')
     mapEchar.on('click', onClickEchartMap)
   }
