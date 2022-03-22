@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-full px-0 py-0 flex items-center justify-center">
-    <!-- <div class="absolute flex z-2 px-10px py-10px">
+  <div class="h-full px-0 py-0">
+    <div class="absolute flex z-2 px-10px py-10px">
       <div
         class="cursor-pointer text-size-18px font-700 text-[#000918] dark:text-[#666666]"
         v-for="(item, index) in state.enterMap"
@@ -12,7 +12,7 @@
           >>
         </span>
       </div>
-    </div> -->
+    </div>
     <div id="map_echar" class="w-full h-full"></div>
   </div>
 </template>

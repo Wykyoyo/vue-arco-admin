@@ -2,11 +2,15 @@
 
 一个使用 Vue 3 + Typescript + Vite + Vue Router + Pinia + Arco Design + Windi CSS 的后台管理系统。因公司需要，创建项目频率较高，故在此封装一些最底层需要的依赖以避免重复工作，并在主干上不断完善一个后台管理系统
 
+## 注意!!如使用该项目请将 src/assets/gif 文件夹删除,该部分只是用来展示效果
+
 [预览地址](https://wyk1995.gitee.io/vue3_base)
 
 ![vue_admin_login](./src/assets/gif/vue_admin_login.gif)
 
 ![vue_admin_home](./src/assets/gif/vue_admin_home.gif)
+
+![vue_admin_home](./src/assets/gif/vue_admin_main.gif)
 
 ## 功能依赖
 
