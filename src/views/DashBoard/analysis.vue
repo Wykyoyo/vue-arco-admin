@@ -167,10 +167,10 @@ const state = reactive<IState>({
 // #endregion
 
 // #region 专门用来存储echars实例具体原因见https://github.com/apache/echarts/issues/16681
-interface IStateEchart {
+interface IShallowState {
   echarts: echarts.ECharts[]
 }
-const stateEchart = shallowReactive<IStateEchart>({
+const shallowState = shallowReactive<IShallowState>({
   echarts: []
 })
 // #endregion
@@ -204,7 +204,7 @@ const initPublishContentEchar = () => {
   const chartDom = document.getElementById('content_publish_echar')
   if (chartDom) {
     const myChart = echarts.init(chartDom)
-    stateEchart.echarts.push(myChart)
+    shallowState.echarts.push(myChart)
     const option: EChartsOption = {
       grid: {
         left: '3%',
@@ -331,7 +331,7 @@ const GetPopularAuthorData = () => {
 watch(
   () => settingStore.darkMode,
   () => {
-    stateEchart.echarts.forEach((item) => {
+    shallowState.echarts.forEach((item) => {
       const option: EChartsOption = {
         xAxis: [
           {
@@ -374,7 +374,7 @@ watch(
 watch(
   () => settingStore.clientWidth,
   () => {
-    stateEchart.echarts.forEach((item) => {
+    shallowState.echarts.forEach((item) => {
       item.resize()
     })
   }
@@ -388,6 +388,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearInterval(state.authorInterval)
+  shallowState.echarts.forEach((item) => {
+    item.dispose()
+  })
 })
 </script>
 <style>

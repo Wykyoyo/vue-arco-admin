@@ -4,7 +4,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, reactive } from 'vue'
+import {
+  nextTick,
+  onMounted,
+  onUnmounted,
+  reactive,
+  shallowReactive
+} from 'vue'
 // eslint-disable-next-line import/order
 import { getGeoJson } from '../../utils/utils'
 // #region echars引用相关
@@ -24,12 +30,20 @@ interface stateModel {
 const state = reactive<stateModel>({
   geoJson: null
 })
+
+interface IShallowState {
+  echarts: echarts.ECharts[]
+}
+const shallowState = shallowReactive<IShallowState>({
+  echarts: []
+})
 // #endregion
 
 const initMapEchar = () => {
   const mapEcharDom = document.getElementById('map_echar')
   if (mapEcharDom) {
     const mapEchar = echarts.init(mapEcharDom)
+    shallowState.echarts.push(mapEchar)
     echarts.registerMap('map', state.geoJson)
     const mapName = 'map'
     const options: EChartsOption = {
@@ -142,6 +156,12 @@ const GetGeoJson = () => {
 onMounted(() => {
   nextTick(() => {
     GetGeoJson()
+  })
+})
+
+onUnmounted(() => {
+  shallowState.echarts.forEach((item) => {
+    item.dispose()
   })
 })
 </script>
