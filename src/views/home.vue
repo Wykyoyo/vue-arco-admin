@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full px-0 py-0">
-    <div class="absolute flex z-2 px-10px py-10px">
+  <div class="w-full h-full px-0 py-0 flex items-center justify-center">
+    <!-- <div class="absolute flex z-2 px-10px py-10px">
       <div
         class="cursor-pointer text-size-18px font-700 text-[#000918] dark:text-[#666666]"
         v-for="(item, index) in state.enterMap"
@@ -12,13 +12,19 @@
           >>
         </span>
       </div>
-    </div>
+    </div> -->
     <div id="map_echar" class="w-full h-full"></div>
   </div>
 </template>
 <script setup lang="ts">
 // 备注:因为伪3D地图下钻性能很差,故放弃采用现有方案。若想实现可参照https://juejin.cn/post/6994606112775340039
-import { nextTick, onMounted, reactive } from 'vue'
+import {
+  nextTick,
+  onMounted,
+  onUnmounted,
+  reactive,
+  shallowReactive
+} from 'vue'
 // eslint-disable-next-line import/order
 import { getGeoJson } from '../utils/utils'
 
@@ -73,6 +79,12 @@ const state = reactive<stateModel>({
     }
   ]
 })
+interface IShallowState {
+  echarts: echarts.ECharts[]
+}
+const shallowState = shallowReactive<IShallowState>({
+  echarts: []
+})
 // #endregion
 
 const initMapEchar = (
@@ -84,6 +96,7 @@ const initMapEchar = (
   const mapEcharDom = document.getElementById('map_echar')
   if (mapEcharDom) {
     const mapEchar = echarts.init(mapEcharDom)
+    shallowState.echarts.push(mapEchar)
     echarts.registerMap('map', state.geoJson)
     const mapName = 'map'
     const options: EChartsOption = {
@@ -101,12 +114,12 @@ const initMapEchar = (
                             <div class="map_tooltip_content_item">
                                 <span class="content_item_point" style="color:#1AFFBF;">●</span>
                                 <span class="content_item_name">正常数据</span>
-                                <span class="content_item_value">${p.data.count.normalNumber}</span>
+                                <span class="content_item_value">${p.data.count?.normalNumber}</span>
                             </div>
                             <div class="map_tooltip_content_item">
                                 <span class="content_item_point" style="color:#FF6132;">●</span>
                                 <span class="content_item_name">缺陷数据</span>
-                                <span class="content_item_value">${p.data.count.abnormalNumber}</span>
+                                <span class="content_item_value">${p.data.count?.abnormalNumber}</span>
                             </div>
                         </div>
                     `
@@ -338,6 +351,11 @@ const ComputeMapData = () => {
 onMounted(() => {
   nextTick(() => {
     GetGeoJson(100000)
+  })
+})
+onUnmounted(() => {
+  shallowState.echarts.forEach((item) => {
+    item.dispose()
   })
 })
 </script>
