@@ -22,12 +22,23 @@
     </Card>
     <Card class="mt-20px">
       <div>
-        <Tabs type="rounded" :active-key="state.tabSelected">
+        <Tabs
+          type="rounded"
+          :active-key="state.tabSelected"
+          @change="onChangeTabs"
+        >
           <TabPane key="base_info" title="基础信息"></TabPane>
           <TabPane key="safe_setting" title="安全设置"></TabPane>
-          <TabPane key="real_name" title="实名认证"></TabPane>
+          <!-- <TabPane key="real_name" title="实名认证"></TabPane> -->
         </Tabs>
-        <div class="">内容</div>
+        <div>
+          <template v-if="state.tabSelected === 'base_info'">
+            <UserBaseInfo></UserBaseInfo>
+          </template>
+          <template v-else-if="state.tabSelected === 'safe_setting'">
+            <UserSafeSetting></UserSafeSetting>
+          </template>
+        </div>
       </div>
     </Card>
   </div>
@@ -35,6 +46,8 @@
 <script lang="ts" setup>
 import { Card, Tabs } from '@arco-design/web-vue'
 import { reactive } from 'vue'
+import UserBaseInfo from './components/UserBaseInfo.vue'
+import UserSafeSetting from './components/UserSafeSetting.vue'
 
 const { TabPane } = Tabs
 
@@ -42,6 +55,7 @@ interface IUserInfo {
   key: string
   value: string
 }
+
 const userInfo: IUserInfo[] = [
   {
     key: 'name',
@@ -72,7 +86,11 @@ const state = reactive<IState>({
     accountID: '12312312321',
     registerTime: '2022-03-24 17:19:20'
   },
-  tabSelected: 'base_info'
+  tabSelected: 'safe_setting'
 })
 // #endregion
+
+const onChangeTabs = (value: string) => {
+  state.tabSelected = value
+}
 </script>

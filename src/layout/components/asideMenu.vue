@@ -75,6 +75,17 @@
       <MenuItem key="/exception/404">404</MenuItem>
       <MenuItem key="/exception/500">500</MenuItem>
     </SubMenu>
+    <SubMenu key="/user">
+      <template #icon>
+        <div class="flex items-center h-full">
+          <svg class="icon h-20px w-20px" aria-hidden="true">
+            <use xlink:href="#icon-user"></use>
+          </svg>
+        </div>
+      </template>
+      <template #title> 个人中心 </template>
+      <MenuItem key="/user/user-setting">用户设置</MenuItem>
+    </SubMenu>
   </Menu>
 </template>
 <script setup lang="ts">
