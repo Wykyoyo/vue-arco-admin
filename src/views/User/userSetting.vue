@@ -3,10 +3,7 @@
     <Card>
       <div class="setting_top flex items-center">
         <div class="w-80px h-80px">
-          <img
-            class="w-80px h-80px rounded-[50%] cursor-pointer"
-            src="../../assets/img/ava.jpg"
-          />
+          <UserAvatar></UserAvatar>
         </div>
         <div class="ml-10px flex-1">
           <div v-for="item in userInfo" :key="item.key">
@@ -48,6 +45,7 @@ import { Card, Tabs } from '@arco-design/web-vue'
 import { reactive } from 'vue'
 import UserBaseInfo from './components/UserBaseInfo.vue'
 import UserSafeSetting from './components/UserSafeSetting.vue'
+import UserAvatar from './components/UserAvatar.vue'
 
 const { TabPane } = Tabs
 
