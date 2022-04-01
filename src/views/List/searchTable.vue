@@ -343,8 +343,10 @@ const GetSearchTableData = () => {
   const data = {}
   getSearchTable(data).then(
     ({ code, data: result }: { code: number; data: resultDataModel }) => {
+      console.log(code)
       if (code === 200) {
         state.table.tableData = result.data
+        console.log(state.table.tableData)
       }
     }
   )

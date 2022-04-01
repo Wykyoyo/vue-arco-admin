@@ -5,7 +5,7 @@ import router from './router'
 
 import './assets/css/reset.css'
 import './assets/js/iconfont.js'
-import './mock/index.ts'
+// import './mock/index.ts'
 import '@arco-design/web-vue/dist/arco.css'
 import 'virtual:windi.css'
 

@@ -38,7 +38,7 @@
       </template>
       <template #title> 列表页 </template>
       <MenuItem key="/list/search-table">查询表格</MenuItem>
-      <MenuItem key="/list/card-list">标准列表</MenuItem>
+      <MenuItem key="/list/card-list">卡片列表</MenuItem>
     </SubMenu>
     <SubMenu key="/blog">
       <template #icon>
