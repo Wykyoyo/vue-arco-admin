@@ -11,6 +11,7 @@ import {
   notfoundRoute
 } from './modules/login'
 import mapRoute from './modules/map'
+import userRoute from './modules/user'
 
 export default [
   homeRoute,
@@ -23,5 +24,6 @@ export default [
   blogRoute,
   directiveRoute,
   exceptionRoute,
+  userRoute,
   notfoundRoute
 ]

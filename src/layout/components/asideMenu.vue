@@ -38,7 +38,7 @@
       </template>
       <template #title> 列表页 </template>
       <MenuItem key="/list/search-table">查询表格</MenuItem>
-      <MenuItem key="/list/card-list">标准列表</MenuItem>
+      <MenuItem key="/list/card-list">卡片列表</MenuItem>
     </SubMenu>
     <SubMenu key="/blog">
       <template #icon>
@@ -74,6 +74,17 @@
       <MenuItem key="/exception/403">403</MenuItem>
       <MenuItem key="/exception/404">404</MenuItem>
       <MenuItem key="/exception/500">500</MenuItem>
+    </SubMenu>
+    <SubMenu key="/user">
+      <template #icon>
+        <div class="flex items-center h-full">
+          <svg class="icon h-20px w-20px" aria-hidden="true">
+            <use xlink:href="#icon-user"></use>
+          </svg>
+        </div>
+      </template>
+      <template #title> 个人中心 </template>
+      <MenuItem key="/user/user-setting">用户设置</MenuItem>
     </SubMenu>
   </Menu>
 </template>
