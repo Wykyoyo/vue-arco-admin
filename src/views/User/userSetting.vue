@@ -84,7 +84,7 @@ const state = reactive<IState>({
     accountID: '12312312321',
     registerTime: '2022-03-24 17:19:20'
   },
-  tabSelected: 'safe_setting'
+  tabSelected: 'base_info'
 })
 // #endregion
 
