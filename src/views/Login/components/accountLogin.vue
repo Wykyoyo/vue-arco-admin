@@ -102,8 +102,8 @@ interface stateModel {
 
 const state = reactive<stateModel>({
   form: {
-    userName: '',
-    password: ''
+    userName: 'admin',
+    password: 'admin'
   }
 })
 
