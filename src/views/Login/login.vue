@@ -50,7 +50,7 @@ interface stateModel {
 }
 
 const state = reactive<stateModel>({
-  loginType: 'sms'
+  loginType: 'account'
 })
 // #endregion
 
